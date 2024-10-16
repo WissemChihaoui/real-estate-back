@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt');
 
 // **Register User**
 const register = async (req, res) => {
-  const { firstName, lastName, email, pwd } = req.body;
+  const { firstName, lastName, email, pwd, picture } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(pwd, 10);
-    const newUser = new User({ firstName, lastName, email, pwd: hashedPassword });
+    const newUser = new User({ firstName, lastName, email, picture, pwd: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: 'User registered successfully!' });
   } catch (error) {
@@ -30,11 +30,19 @@ const login = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    const user = await User.findOne();
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // edite user with id
 const updateUserById = async (req, res) => {
   const userId = req.params.id; // Get user ID from params
   const updates = req.body; // Get updates from request body
-
   try {
     // Find user by ID and update with new data
     const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
@@ -72,7 +80,7 @@ const EditPwd = async (req, res) => {
 
     res.json({ message: 'Password updated successfully' });
   } catch (error) {
-    console.error('Error updating password:', error); 
+    console.error('Error updating password:', error);
     res.status(500).json({ error: 'An error occurred while updating the password' });
   }
 };
@@ -80,6 +88,7 @@ const EditPwd = async (req, res) => {
 module.exports = {
   register,
   login,
+  getUser,
   updateUserById,
   EditPwd,
 };
