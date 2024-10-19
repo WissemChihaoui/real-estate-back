@@ -26,6 +26,8 @@ const propertyRoutes = require('./routes/propertyRoutes');
 const authAccesRoutes = require('./routes/authRoutes');
 app.use('/api/properties', propertyRoutes);
 app.use('/auth/user', authAccesRoutes);
-
+app.use('/hello', (req, res) => {
+  res.send("hello server running");
+});
 // Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
