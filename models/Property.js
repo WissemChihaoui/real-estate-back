@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 const propertySchema = new mongoose.Schema(
   {
-    image: { type: String, required: true }, // Main image URL
     thumbnails: [{ type: String }], // List of thumbnail image URLs
     title: { type: String, required: true },
     location: {
@@ -14,7 +13,7 @@ const propertySchema = new mongoose.Schema(
     },
     price: { type: Number, required: true },
     description: { type: String, required: true },
-    type: { type: [String], enum: ['b', 't'], required: true }, // 'b' for buy, 't' for rent
+    type: { type: String, enum: ['v','m', 't'], required: true }, // 'b' for buy, 't' for rent
     criteria: {
       piscine: { type: Number, default: 0 }, // Number of pools
       garage: { type: Number, default: 0 }, // Number of garages
