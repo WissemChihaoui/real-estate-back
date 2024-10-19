@@ -22,6 +22,20 @@ const getPropertyById = async (req, res) => {
   }
 };
 
+const getPropertyByCat = async (req, res) => {
+  //console.log(req.params);
+  try {
+    const property = await Property.find({ type: req.params.type });
+    if (!property) return res.status(404).json({ message: 'Property not found in this category' });
+    if ((property.length = 0)){
+      return res.status(400).json({ message: 'Property not found in this category' });
+    }
+    res.json(property);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Create a new property
 const createProperty = async (req, res) => {
   const property = new Property(req.body);
@@ -68,6 +82,7 @@ module.exports = {
   getAllProperties,
   getPropertyById,
   createProperty,
+  getPropertyByCat,
   editProperty,
   deleteProperty,
 };
