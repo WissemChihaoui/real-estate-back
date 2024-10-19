@@ -16,6 +16,6 @@ router.get('/get-propertie/:id', getPropertyById); // GET a single property by I
 router.get('/get-properties-by-cat/:type', getPropertyByCat);
 router.put('/edite-propertie/:id', editProperty);
 router.post('/create-propertie', createProperty); // POST a new property
-router.delete('/delte-propertie/:id', deleteProperty); // DELETE a property
+router.delete('/delete-propertie/:id', deleteProperty); // DELETE a property
 
 module.exports = router;
