@@ -8,7 +8,7 @@ node_modules/
 logs
 *.log
 npm-debug.log*
-
+vercel.json
 # Build output
 dist/
 build/
