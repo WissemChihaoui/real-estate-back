@@ -18,14 +18,25 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, pwd } = req.body;
   try {
+    // Find the user by email
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
+    // Compare the provided password with the hashed password in the database
     const isMatch = await bcrypt.compare(pwd, user.pwd);
-    if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
 
-    res.json({ message: 'Login successful!' });
+    // Return the user info and a success message
+    res.json({
+      message: 'Login successful!',
+      user
+    });
   } catch (error) {
+    // Handle any server errors
     res.status(500).json({ error: error.message });
   }
 };
