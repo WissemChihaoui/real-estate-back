@@ -12,6 +12,7 @@ const propertySchema = new mongoose.Schema(
       latitude: { type: Number, required: true },
     },
     price: { type: Number, required: true },
+    for: { type: String, required: true },
     description: { type: String, required: true },
     type: { type: String, enum: ['v','m', 't'], required: true }, // 'b' for buy, 't' for rent
     criteria: {
