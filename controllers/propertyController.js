@@ -49,24 +49,44 @@ const createProperty = async (req, res) => {
 };
 // edite proeritie
 const editProperty = async (req, res) => {
-  const propertyId = req.params.id; 
+  const propertyId = req.params.id;
   const updatedData = req.body;
+  
+  //console.log('updatedData.for:', updatedData.for);
+  
   try {
-    const property = await Property.findById(propertyId);
+    // Met à jour la propriété et retourne l'objet mis à jour
+    const property = await Property.findByIdAndUpdate(propertyId, updatedData, { new: true });
+    
     if (!property) {
       return res.status(404).json({ message: 'Property not found' });
     }
-
-    Object.assign(property, updatedData); 
     
-    await property.save();
-
     res.status(200).json({ message: 'Property updated successfully', property });
   } catch (error) {
     console.error('Error updating property:', error);
     res.status(500).json({ error: 'An error occurred while updating the property' });
   }
 };
+// const editProperty = async (req, res) => {
+//   const propertyId = req.params.id; 
+//   const updatedData = req.body;
+//   try {
+//     const property = await Property.findById(propertyId);
+//     if (!property) {
+//       return res.status(404).json({ message: 'Property not found' });
+//     }
+
+//     Object.assign(property, updatedData); 
+    
+//     await property.save();
+
+//     res.status(200).json({ message: 'Property updated successfully', property });
+//   } catch (error) {
+//     console.error('Error updating property:', error);
+//     res.status(500).json({ error: 'An error occurred while updating the property' });
+//   }
+// };
 // Delete a property
 const deleteProperty = async (req, res) => {
   try {
